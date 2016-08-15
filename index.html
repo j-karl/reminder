@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html ng-app="reminder">
+    <head>
+        <meta charset="utf-8">
+        <title>Reminder</title>
+        <link rel="stylesheet" href="./css/index.css" media="screen" title="no title" charset="utf-8">
+        <script type="text/javascript" src = "./js/jquery.js"></script>
+        <script type="text/javascript" src = "./js/angular.js"></script>
+        <script type="text/javascript" src = "./js/angular-animate.js"></script>
+        <script type="text/javascript" src = "./js/index.js"></script>
+    </head>
+    <body ng-controller="mainCtrl" ng-click="showcard=false">
+        <div class="container">
+            <div class="left">
+                <div class="header">
+                    <div class="title">
+                        <span>iCloud</span>
+                    </div>
+                    <div class="chTitle">
+                        <span>提醒事项</span>
+                    </div>
+                     <div class="plus" ng-click="add()">
+                        <div class="plus-icon"></div>
+                    </div>
+                </div>
+                <div class="lists-header">
+                    <div class="time-icon">
+                        <i></i>
+                    </div>
+                    <div class="plan">已计划</div>
+                </div>
+                <ul class="lists">
+                    <li class="list" ng-repeat="v in list track by v.id" ng-class="{selected:(v===currentlist)}" ng-click="select($index)" >
+                        <div class="theme-icon"><i ng-class="v.theme"></i></div>
+                        <input type="text" name="name" ng-model="v.title">
+                        <div class="border"></div>
+                    </li>
+                </ul>
+            </div>
+            <div class="right">
+                <div class="top-search">
+                    <div class="inner-search">
+                        <span></span>
+                        搜索所有提醒
+                    </div>
+                </div>
+
+                <div class="contents-inner" ng-class="currentlist.theme" ng-init="showcard=false">
+                    <div class="bao-title">
+                        <p class="title" ng-bind="currentlist.title"></p>
+                        <div class="option" ng-click="showcard=!showcard;pop($event)">选项</div>
+                        <div class="options" ng-show="showcard" ng-click="pop($event)">
+                            <div class="option-inner">
+                                <input class="xuanxiang" type="text" ng-model="currentlist.title" ng-keyup="save()">
+                                <p>
+                                    列表颜色
+                                </p>
+                                <ul class="optionColor">
+                                    <li ng-repeat="v in themes" ng-click="currentlist.theme = v;save()" ng-class="[v,{current:(v===currentlist.theme)}]" >
+                                        <span class="circle" ng-class="v"></span>
+                                    </li>
+                                </ul>
+                                <div class="delete" ng-click="delete(currentlist.id);showcard=false">
+                                    删除
+                                </div>
+                                <div class="finish">完成</div>
+                                <div class="cancel" ng-click="showcard=false">取消</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-main" ng-init="jiantou=false;back=false">
+                        <div class="row"></div>
+                        <div class="yiwancheng">
+                            <i class="jiantou" ng-click="shouqi();jiantou = !jiantou"  ng-class="{active:jiantou}"></i>
+                            已完成
+                            <span ng-bind="(currentlist.todos | filter:{isDone:true}).length">0</span>
+                            项
+                        </div>
+                        <ul>
+                            <li ng-repeat="v in currentlist.todos | filter:{isDone:true} track by $index" ng-click="back=true" ng-class="{active:back}">
+                                <div class="row1"></div>
+                                <span ng-class="{checked:v.isDone}"  ng-click="v.isDone = !v.isDone;save()" ></span>
+                                <input ng-model="v.name" ng-blur="back=false" ng-keyup="save()">
+                                <div class="moreInfo" ng-click="showDetail1()">详细信息</div>
+                                <div class="detailInfo">
+                                    <div class="detail-inner">
+                                        <div class="delete" ng-click="delete(currentlist.id);save()">
+                                            删除
+                                        </div>
+                                        <div class="finish">完成</div>
+                                        <div class="cancel" ng-click="cancel()">取消</div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="undone" ng-init="back=false">
+                        <ul class="undoneList">
+                            <li ng-repeat="v in currentlist.todos | filter:{isDone:false} track by $index" ng-click="back=true" ng-class="{active:back}">
+                                <div class="row1"></div>
+                                <span ng-click="v.isDone = !v.isDone;save()" ng-class="{checked:v.isDone}"></span>
+                                <input ng-model="v.name" ng-blur="back=false" ng-keyup="save()">
+                                <div class="moreInfo" ng-click="showDetail2()">详细信息</div>
+                                <div class="detailInfo">
+                                    <div class="detail-inner">
+                                        <div class="delete" ng-click="delete();save()">
+                                            删除
+                                        </div>
+                                        <div class="finish">完成</div>
+                                        <div class="cancel" ng-click="cancel()">取消</div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="add" ng-click="addList()">
+                        <div class="row1"></div>
+                        新条目
+                        <div class="rowbottom"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

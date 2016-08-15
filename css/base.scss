@@ -1,0 +1,55 @@
+*{
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	position: relative;
+	// font-family:'SFNSText', 'Helvetica Neue', 'Microsoft Yahei', 'SimHei', sans-serif;
+	font-weight: 350;
+}
+input{
+	color: inherit;
+}
+@mixin c-align{
+	position: absolute;
+	left: 0;
+	right: 0;
+	margin: auto;
+}
+@mixin v-align{
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+}
+@mixin center{
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+}
+@mixin cover{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+@mixin square($size){
+	width: $size;
+	height: $size;
+	// background-color: #033E45;
+}
+@mixin rectargl($length ,$high){
+	width: $length;
+	height: $high;
+	background-color: #B50677;
+}
+@mixin circle($size){
+	width: $size;
+	height: $size;
+	border-radius: 50%;
+	background-color:#A5A03F;
+}
